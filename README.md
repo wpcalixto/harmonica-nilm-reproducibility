@@ -6,6 +6,12 @@ Version 2.0.0 (2026-09-21) · Repository `harmonica-nilm-reproducibility`
 - Concept DOI (all versions, permanent): https://doi.org/10.5281/zenodo.20681041
 - Source code: https://github.com/wpcalixto/harmonica-nilm-reproducibility
 
+> **Dataset not in this repository.** The public dataset `data/raw/dados_maior_v2_transformed.csv`
+> (536 MB) exceeds the GitHub file-size limit and is distributed only through Zenodo:
+> https://doi.org/10.5281/zenodo.22878924 (version 2.0.0; concept DOI for all versions:
+> https://doi.org/10.5281/zenodo.20681041). Download `05_data_environment_licenses_v2.0.0.zip`
+> from the record and unpack it at the repository root before running stages 01–13.
+
 ## Scientific scope
 
 This package contains the complete computational pipeline of the article *Scale-admissibility gate for non-intrusive load monitoring in three-phase industrial energy systems with an unmeasured support source* (Applied Energy): ingestion and audit of the measurement campaign of an industrial three-phase installation (16 meters, 131,216 records, 177 electrical quantities per meter), sanitisation and gap filling, selection of the input features of the general meter (M_G), training and evaluation of six disaggregation models (LSTM, RCNN-att, PE-ES, SPEC, MoTE_v2, Ensemble_G4) for 18 load outputs (6 loads x 3 phases), the scale-admissibility gate and the load-consistency residual with its sensitivity budget, statistical comparison, explainability (family ablation and grouped permutation importance), economic projection and the reproducibility report.

@@ -1,0 +1,95 @@
+# model_config.yaml
+# Model training parameters, all locked to the article
+
+seeds: [42, 123, 456, 789, 1024]    # LOCKED: 5 seeds
+status: "locked_main_method"
+
+optimizer:
+  name: "Adam"                       # LOCKED
+  status: "locked_main_method"
+  learning_rate: 0.001
+  beta_1: 0.9
+  beta_2: 0.999
+  epsilon: 1.0e-7
+
+loss:
+  name: "masked_mae_phase_constraint"  # LOCKED
+  status: "locked_main_method"
+  note: "masked MAE with phase balance penalty; not plain MAE"
+
+early_stopping:
+  monitor: "val_loss"
+  patience: 20
+  restore_best_weights: true
+  status: "locked_main_method"
+
+models:
+  lstm_baseline:
+    status: "locked_main_method"
+    W: 12
+    description: "Recurrent LSTM baseline"
+
+  rcnn_att:
+    status: "locked_main_method"
+    W: 12
+    description: "Residual CNN with attention mechanism (RCNN-att)"
+    attention_activation: "keras.activations.softmax"
+    note: "Use keras.activations.softmax — NOT tf.nn.softmax (bug fix)"
+
+  pe_es:
+    status: "locked_main_method"
+    W: 36
+    optimizer_search: "Optuna_TPE_CMA_ES"
+    description: "Positional Encoding + Encoder-Sequence (PE+ES) with Optuna"
+
+  spec:
+    status: "locked_main_method"
+    W: 36
+    description: "SPEC specialized search as defined in the article"
+
+  mote_v2:
+    status: "locked_main_method"
+    W: 36
+    description: "MoTE_v2 — seq2seq prototype with per-output gate"
+    reporting: "separate"
+    note: "Oracle seed 456 = NAE 2.54%; reported separately from main table"
+
+  ensemble_g4:
+    status: "locked_main_method"
+    description: "Selective ensemble G4 — LSTM + RCNN-att per-output complementarity"
+    reporting: "text_only"
+    note: "Excluded from Table 4; mentioned in text"
+
+prohibited_in_main_pipeline:
+  - "HMM"
+  - "HSMM"
+  - "Kalman"
+  - "TCN_new"
+  - "Transformer_new"
+  - "XGBoost_new"
+  - "RandomForest_new"
+  - description: "Do not add new models to main pipeline without full experimental revalidation"
+
+feature_selection:
+  method: "RFECV_SVR_linear_Kneedle"  # LOCKED
+  status: "locked_main_method"
+  per_output: true
+  preserve_temporal_order: true
+  no_shuffle: true
+  no_test_access: true
+  store_subsets_per_output: true
+  rank_by: "SVR_linear_coefficient_magnitude"
+  expected_result: "177 -> 60 features (original article)"
+  note: "Do not write 'RFECV or equivalent'; method is specifically RFECV-SVR + Kneedle"
+
+metrics:
+  status: "locked_main_method"
+  list: ["MAE", "MSE", "NAE", "AAE", "ERG"]
+  statistical_tests: ["Wilcoxon", "Cohen_d", "Pearson_NAE_ERG", "PFI"]
+
+pfi:
+  name: "Permutation Feature Importance"
+  status: "locked_main_method"
+
+alignment:
+  note: "y_pred[i] aligns with y_raw[i + W//2] — mid-window alignment (bug fix)"

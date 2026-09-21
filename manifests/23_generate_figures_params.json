@@ -1,0 +1,8 @@
+{
+  "script": "23_generate_figures.py",
+  "ex": "29_generate_figures.py",
+  "run_timestamp": "2026-07-15T00:46:55.153231+00:00",
+  "escopo": "figuras de resultados (10\u201318); Bloco A/B via fig_bloco_* depois",
+  "protocolo": "fig_bloco_A (usetex, 18pt, PDF); 6 principais + PE-ES-Optuna* sensibilidade",
+  "n_figures": 24
+}

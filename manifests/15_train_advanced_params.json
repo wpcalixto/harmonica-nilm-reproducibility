@@ -1,0 +1,56 @@
+{
+  "script": "15_train_advanced.py",
+  "run_timestamp": "2026-07-15T00:38:11.856887+00:00",
+  "merge_de": [
+    "20_train_pe_es_spec.py",
+    "21_train_mote_v2_and_ensemble_g4.py",
+    "15_exp_pe_es_optuna.py (sensibilidade, via RUN_OPTUNA=1)"
+  ],
+  "methodology": {
+    "pe_es": "W* por valida\u00e7\u00e3o (grade [6, 12, 18, 24, 30, 36]), sem Optuna",
+    "spec": "PE-ES com peso 5 em 2 cargas dif\u00edceis (RCNN, valida\u00e7\u00e3o)",
+    "mote_v2": "W=36 fixo",
+    "ensemble_g4": "por output, melhor de {14_lstm,14_rcnn} por NAE de valida\u00e7\u00e3o",
+    "W_star": 30,
+    "hpo_sensitivity": "PE-ES-Optuna via RUN_OPTUNA=1 (fora do fluxo principal)"
+  },
+  "results": {
+    "pe_es": {
+      "W": 30,
+      "nae_test_mean": 6.1942,
+      "per_seed": {
+        "42": 5.847316666666667,
+        "123": 7.345894444444444,
+        "456": 5.7286222222222225,
+        "789": 6.50295,
+        "1024": 5.546066666666667
+      }
+    },
+    "spec": {
+      "W": 30,
+      "nae_test_mean": 6.5597,
+      "per_seed": {
+        "42": 9.482827777777779,
+        "123": 5.817483333333334,
+        "456": 5.372416666666666,
+        "789": 5.998938888888889,
+        "1024": 6.126722222222222
+      }
+    },
+    "mote_v2": {
+      "W": 36,
+      "nae_test_mean": 4.7797,
+      "per_seed": {
+        "42": 4.850644444444445,
+        "123": 4.665694444444444,
+        "456": 4.736622222222222,
+        "789": 4.739688888888889,
+        "1024": 4.9061
+      }
+    },
+    "ensemble_g4": {
+      "W": 12,
+      "nae_test_mean": 5.1881
+    }
+  }
+}

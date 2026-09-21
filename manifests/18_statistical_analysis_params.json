@@ -1,0 +1,29 @@
+{
+  "script": "18_statistical_analysis.py",
+  "run_timestamp": "2026-07-15T00:46:46.013503+00:00",
+  "ex": "26_statistical_analysis.py",
+  "parameters": {
+    "seeds": [
+      42,
+      123,
+      456,
+      789,
+      1024
+    ],
+    "n_reps": 5,
+    "e_min_kwh": 1.0,
+    "pfi_ref": "LSTM",
+    "pfi_formula": "I_f = \u0394NAE_f / NAE_baseline"
+  },
+  "results": {
+    "n_wilcoxon_pairs": 15,
+    "pearson_r": 0.6490695448215819,
+    "pearson_p": 0.00010435762609706185,
+    "pearson_sig": "***",
+    "pearson_interp": "correlated",
+    "baseline_nae_pct": 2.1173142792550226,
+    "pfi_top_feature": "hrm_v_bn_29",
+    "pfi_top_I_f": 0.104425,
+    "n_active": 18
+  }
+}

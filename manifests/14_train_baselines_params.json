@@ -1,0 +1,77 @@
+{
+  "script": "14_train_baselines.py",
+  "run_timestamp": "2026-07-14T21:42:57.364035+00:00",
+  "merge_de": [
+    "18_train_lstm_baseline.py",
+    "19_train_rcnn_attention.py"
+  ],
+  "parameters": {
+    "W": 12,
+    "seeds": [
+      42,
+      123,
+      456,
+      789,
+      1024
+    ],
+    "epochs_max": 500,
+    "patience": 30,
+    "lr": 0.001,
+    "lstm_units": 100,
+    "lstm_batch": 32,
+    "rcnn_batch": 64,
+    "loss": "masked_mae_phase_constraint"
+  },
+  "data": {
+    "n_features": 60,
+    "output_dim": 18,
+    "output_labels": [
+      "G1_A",
+      "G1_B",
+      "G1_C",
+      "G2_A",
+      "G2_B",
+      "G2_C",
+      "G3_A",
+      "G3_B",
+      "G3_C",
+      "G4_A",
+      "G4_B",
+      "G4_C",
+      "G5_A",
+      "G5_B",
+      "G5_C",
+      "G6_A",
+      "G6_B",
+      "G6_C"
+    ]
+  },
+  "results": {
+    "lstm": {
+      "name": "lstm",
+      "n_outputs": 18,
+      "overall_nae_mean": 5.2107,
+      "overall_nae_std": 0.5816,
+      "epochs_per_seed": {
+        "42": 31,
+        "123": 31,
+        "456": 35,
+        "789": 31,
+        "1024": 39
+      }
+    },
+    "rcnn_att": {
+      "name": "rcnn_att",
+      "n_outputs": 18,
+      "overall_nae_mean": 5.7199,
+      "overall_nae_std": 0.5275,
+      "epochs_per_seed": {
+        "42": 36,
+        "123": 45,
+        "456": 34,
+        "789": 38,
+        "1024": 47
+      }
+    }
+  }
+}

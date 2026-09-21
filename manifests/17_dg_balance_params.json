@@ -1,0 +1,88 @@
+{
+  "script": "17_dg_balance.py",
+  "run_timestamp": "2026-07-21T16:38:34.978907+00:00",
+  "merge_de": [
+    "23_reconstruct_dg_balance.py",
+    "24_run_dg_sensitivity_analysis.py",
+    "25_quantify_uncertainty.py"
+  ],
+  "metodologia": {
+    "M_G": "reconstru\u00eddo = \u03a3 cargas_obs(fase) + P_other(fase) (fechamento, DG=0)",
+    "predicao": "m\u00e9dia das 5 sementes",
+    "ERG_bal": "|E_DG_pred \u2212 E_DG_obs| / |E_MG| \u00d7 100",
+    "cenarios_B": {
+      "S0": "baseline",
+      "S1-S3": "perdas 1/2/5%",
+      "S4-S7": "P_other sem M12/M13/M10/M14 (estrutural)"
+    },
+    "u_total": "\u221a(u\u00b2_met_load+\u03a3u\u00b2_Pi+u\u00b2_sync) \u2014 3 termos com derivada nao nula em R_cl; u_loss e u_imp EXCLUIDOS (dR_cl/dP_loss=0, dR_cl/dP_other=0); cenarios estruturais reportados como diagnostico separado do agregado",
+    "ref_model": "MoTE_v2",
+    "model_groups": {
+      "primary": "6 modelos principais do Bloco B",
+      "hpo_sensitivity": "PE_ES_Optuna; an\u00e1lise de sensibilidade com busca intensiva de hiperpar\u00e2metros"
+    },
+    "PE_ES_Optuna": "inclu\u00eddo no balan\u00e7o D_G apenas como sensibilidade marcada, n\u00e3o no ranking principal"
+  },
+  "results": {
+    "A": {
+      "energy_by_phase_rows": 48
+    },
+    "B": {
+      "sensitivity_rows": 144,
+      "structural_rows": 72
+    },
+    "C": {
+      "u_total_kWh_by_phase": {
+        "A": 0.5494,
+        "B": 0.4881,
+        "C": 0.4774
+      },
+      "ref_model": "MoTE_v2",
+      "T_hours": 16.083
+    },
+    "models_evaluated": [
+      {
+        "model": "LSTM",
+        "prefix": "14_lstm_predictions.parquet",
+        "W": 12,
+        "analysis_group": "primary",
+        "is_primary": true
+      },
+      {
+        "model": "RCNN_att",
+        "prefix": "14_rcnn_att_predictions.parquet",
+        "W": 12,
+        "analysis_group": "primary",
+        "is_primary": true
+      },
+      {
+        "model": "PE_ES",
+        "prefix": "15_pe_es_predictions.parquet",
+        "W": 30,
+        "analysis_group": "primary",
+        "is_primary": true
+      },
+      {
+        "model": "SPEC",
+        "prefix": "15_spec_predictions.parquet",
+        "W": 30,
+        "analysis_group": "primary",
+        "is_primary": true
+      },
+      {
+        "model": "MoTE_v2",
+        "prefix": "15_mote_v2_predictions.parquet",
+        "W": 36,
+        "analysis_group": "primary",
+        "is_primary": true
+      },
+      {
+        "model": "Ensemble_G4",
+        "prefix": "15_ensemble_g4_predictions.parquet",
+        "W": 12,
+        "analysis_group": "primary",
+        "is_primary": true
+      }
+    ]
+  }
+}

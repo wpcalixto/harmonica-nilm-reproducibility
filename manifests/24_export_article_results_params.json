@@ -1,0 +1,17 @@
+{
+  "script": "24_export_article_results.py",
+  "ex": "30_export_article_results.py",
+  "run_timestamp": "2026-07-15T00:46:55.899187+00:00",
+  "best_primary_nae_model": "MoTE_v2",
+  "best_primary_erg_model": "Ensemble_G4",
+  "n_primary": 6,
+  "n_sensitivity": 0,
+  "missing_inputs": [
+    "09_scenario_mapping.csv"
+  ],
+  "outputs": [
+    "article/24_article_values.yaml",
+    "article/24_article_results_summary.md",
+    "article/24_methods_values_checklist.md"
+  ]
+}

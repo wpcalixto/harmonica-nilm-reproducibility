@@ -1,0 +1,64 @@
+cff-version: 1.2.0
+message: "If you use this software or data, please cite it using the metadata below."
+type: software
+title: "Reproducibility package for non-intrusive load monitoring in industrial three-phase multi-source systems"
+abstract: >
+  Complete computational pipeline (29 canonical stages, shared module and 15 auxiliary
+  scripts), trained models and per-window predictions of the article "Scale-admissibility
+  gate for non-intrusive load monitoring in three-phase industrial energy systems with an
+  unmeasured support source" (Applied Energy).
+version: "2.0.0"
+date-released: "2026-09-21"
+license: MIT
+doi: "10.5281/zenodo.22878924"
+repository-code: "https://github.com/wpcalixto/harmonica-nilm-reproducibility"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.22878924"
+    description: "Version 2.0.0"
+  - type: doi
+    value: "10.5281/zenodo.20681041"
+    description: "Concept DOI (all versions)"
+authors:
+  - family-names: "Calixto"
+    given-names: "Wesley Pacheco"
+    affiliation: "Federal University of Goias / University of Coimbra / Federal Institute of Goias, Brazil"
+    email: "wesley.pacheco@isr.uc.pt"
+    orcid: "https://orcid.org/0000-0002-1928-4432"
+  - family-names: "Cararo"
+    given-names: "Jose A. Gobbes"
+    affiliation: "Federal University of Goias / Federal Institute Goiano, Brazil"
+    orcid: "https://orcid.org/0000-0003-1686-4519"
+  - family-names: "Ribeiro"
+    given-names: "Guilherme A. Sousa"
+    affiliation: "Federal University of Goias / Federal Institute of Goias, Brazil"
+    orcid: "https://orcid.org/0000-0002-2230-9573"
+  - family-names: "Santos"
+    given-names: "Paulo Victor"
+    affiliation: "Federal University of Goias / Federal Institute of Goias, Brazil"
+    orcid: "https://orcid.org/0000-0002-8267-7562"
+references:
+  - type: article
+    title: "Scale-admissibility gate for non-intrusive load monitoring in three-phase industrial energy systems with an unmeasured support source"
+    journal: "Applied Energy"
+    year: 2026
+    authors:
+      - family-names: "Calixto"
+        given-names: "Wesley Pacheco"
+      - family-names: "Cararo"
+        given-names: "Jose A. Gobbes"
+      - family-names: "Ribeiro"
+        given-names: "Guilherme A. Sousa"
+      - family-names: "Santos"
+        given-names: "Paulo Victor"
+keywords:
+  - NILM
+  - non-intrusive load monitoring
+  - industrial energy disaggregation
+  - three-phase systems
+  - multi-source energy systems
+  - scale admissibility
+  - load-consistency residual
+  - deep learning
+  - feature selection
+  - reproducibility

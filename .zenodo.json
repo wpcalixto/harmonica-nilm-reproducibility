@@ -1,0 +1,60 @@
+{
+  "title": "Reproducibility package for non-intrusive load monitoring in industrial three-phase multi-source systems",
+  "version": "2.0.0",
+  "upload_type": "software",
+  "publication_date": "2026-09-21",
+  "license": "cc-by-4.0",
+  "access_right": "embargoed",
+  "creators": [
+    {
+      "name": "Calixto, Wesley Pacheco",
+      "affiliation": "Federal University of Goias / University of Coimbra / Federal Institute of Goias, Brazil",
+      "orcid": "0000-0002-1928-4432"
+    },
+    {
+      "name": "Cararo, Jose Alberto Gobbes",
+      "affiliation": "Federal University of Goias / Federal Institute Goiano, Brazil",
+      "orcid": "0000-0003-1686-4519"
+    },
+    {
+      "name": "Ribeiro, Guilherme A. Sousa",
+      "affiliation": "Federal University of Goias / Federal Institute of Goias, Brazil",
+      "orcid": "0000-0002-2230-9573"
+    },
+    {
+      "name": "Santos, Paulo Victor",
+      "affiliation": "Federal University of Goias / Federal Institute of Goias, Brazil",
+      "orcid": "0000-0002-8267-7562"
+    }
+  ],
+  "description": "<p>Complete reproducibility package of the article <em>Scale-admissibility gate for non-intrusive load monitoring in three-phase industrial energy systems with an unmeasured support source</em> (Applied Energy): 29 canonical pipeline stages, shared module and 15 auxiliary Python scripts; six YAML configuration files; trained models (35 .keras) and per-window predictions of six disaggregation models over five seeds; execution manifests; and the public dataset (16 meters, 131,216 records, 177 electrical quantities per meter) in a reversibly transformed form that preserves ordering and temporal structure while protecting the absolute values covered by a confidentiality agreement with the industrial facility. The inverse-transformation key is available from the corresponding author under a Data Use Agreement. Code under the MIT licence; data, models, predictions and manifests under CC BY 4.0. Version 2.0.0 supersedes 1.0.1, which contained an outdated pipeline and an uncorrected dataset.</p>",
+  "keywords": [
+    "NILM",
+    "non-intrusive load monitoring",
+    "industrial energy disaggregation",
+    "three-phase systems",
+    "multi-source energy systems",
+    "scale admissibility",
+    "load-consistency residual",
+    "LSTM",
+    "mixture of experts",
+    "feature selection",
+    "RFECV",
+    "permutation importance",
+    "reproducibility"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/wpcalixto/harmonica-nilm-reproducibility",
+      "relation": "isSupplementTo",
+      "resource_type": "software"
+    },
+    {
+      "identifier": "10.5281/zenodo.20681042",
+      "relation": "isNewVersionOf",
+      "resource_type": "software"
+    }
+  ],
+  "notes": "Files embargoed until 2026-12-20 (90 days after publication on 2026-09-21); the inverse-transformation key of the dataset is not part of the package.",
+  "embargo_date": "2026-12-20"
+}

@@ -1,0 +1,71 @@
+# meter_map.yaml
+# Meter identification, roles and load assignments
+# Source: dados_maior_v2 (physical data; published as dados_maior_v2_transformed.csv); meter_id: 1,2,5,6,7,8,9,10,11,12,13,14,15,16,17,18
+#
+# PROVENANCE: the blocks `roles`, `dead_sentinel_power_channels` and `anomalies` below
+# were re-audited on the v2 dataset (2026-07-10) by scripts 03 (audit), 04 (inverse
+# compatibility) and 05 (scope): dead group [8,9,17,18] confirmed; M15 keeps MW-level
+# peaks; M2 ~ M_G confirmed; M10/M12/M13 are LIVE (sparse) and belong to P_other.
+provenance: "reaudited_on_v2_2026-07-10"    # roles/anomalies re-derived from v2 (03+04+05)
+
+meters:
+  all_ids: [1, 2, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
+  main_grid: 1         # M_G: main grid supply meter (input X); never a target
+  dg_meter: null       # D_G not directly measured; reconstructed by balance
+
+  labels:
+    1:  "M_G"          # Main grid supply: input X (aggregates all loads)
+    2:  "M2"           # Excluded target: M2 ~ M_G (near-collinear with grid input)
+    5:  "M5"           # Modeled load Gamma_1
+    6:  "M6"           # Modeled load Gamma_2
+    7:  "M7"           # Modeled load Gamma_3
+    8:  "M8"           # Dead/redundant group [8,9,17,18]
+    9:  "M9"           # Dead/redundant group
+    10: "M10"          # P_other component
+    11: "M11"          # Modeled load Gamma_4
+    12: "M12"          # P_other component
+    13: "M13"          # P_other component
+    14: "M14"          # P_other component
+    15: "M15"          # Modeled load Gamma_5 (retained after directed outlier removal + repair)
+    16: "M16"          # Modeled load Gamma_6
+    17: "M17"          # Dead/redundant group
+    18: "M18"          # Dead/redundant group
+
+phases: ["a", "b", "c"]
+
+# Roles (canonical, AS-IMPLEMENTED in 09_build_model_datasets.py):
+#   Scenario R0 = loads {5,6,7,11,16}      -> 15 outputs (reference/traceability)
+#   Scenario R1 = loads {5,6,7,11,15,16}   -> 18 outputs (main; M15 = Gamma_5)
+#   Scenario R2 = R1 + P_other             -> 18 + 3 = 21 balance series
+# roles: RE-AUDITED on v2 (2026-07-10), scripts 03 (audit) + 04 (inverse) + 05 (scope).
+roles:
+  m_g_input: [1]
+  modeled_loads: [5, 6, 7, 11, 15, 16]         # Gamma_1..6; Gamma_5 = M15 (distinct load; NO merge with M14)
+  p_other_components: [10, 12, 13, 14]         # v2: M14 is an ELECTRICALLY DISTINCT load from M15 -> part of P_other
+  excluded: [2]                                # M2 ~ M_G (overlapping duplicate)
+  dead_redundant: [8, 9, 17, 18]               # dead in current/power (live in voltage)
+
+p_other_meter_id: 100
+p_other_component_meters: [10, 12, 13, 14]     # v2: P_other = M10+M12+M13+M14 (M14 distinct from M15 by the electrical audit)
+redundant_group: [8, 9, 17, 18]
+dead_sentinel_power_channels: [8, 9, 17, 18]   # v2: dead in power. M10/12/13/14 are SPARSE -> P_other
+
+anomalies:
+  m2_almost_equal_mg:
+    description: "M2 ~ M_G (corr ~1.0, overlapping duplicate)"
+    action: "Excluded as a Gamma_i target"
+  m14_m15_distinct_loads:                       # v2 (electrical audit in script 09)
+    description: "M14 and M15 without temporal overlap (0 common minutes), ~45% coverage each; BUT the electrical audit indicates DISTINCT LOADS: same voltage, but I/S ~5.7x, cosphi 0.36 vs 0.71, Q with OPPOSITE sign. The gain is not only CT. Temporal complementarity compatible with multiplexed acquisition of distinct points."
+    action: "M15 = Gamma_5 (modelled load); M14 = distinct load -> part of P_other (M10+M12+M13+M14). NO union/merge/concatenation."
+  m8_m9_m17_m18_dead:
+    description: "M8, M9, M17, M18 dead in current/power (100% sentinel); live in voltage (energised busbar without load)"
+    action: "Excluded from the supervised targets; not summed"
+  m16_sq_triangle:                              # NEW FINDING in v2 (03/04)
+    description: "M16 (Gamma_6): violation of the triangle P^2+Q^2~S^2, but V/cos/THD/harm/P OK; the inverse problem shows a reconcilable S/Q scale (ALERT)"
+    action: "Kept as a load; valid P; S/Q with an alert marker"
+  m1a_m2_m12_reverse_phase_a:
+    description: "M_G, M2, M12 record P<0 in phase A (reverse flow); inverse problem: incompatible by SIGN (INCOMPATIBLE_PERSISTENT)"
+    action: "Sign-sensitivity scenario S_sign vs S_inv (balance script)"
+  p_other_aggregate:
+    description: "M10, M12, M13 are sparse loads not modelled individually"
+    action: "Aggregated into P_other (P01, meter_id 100) for the balance closure"

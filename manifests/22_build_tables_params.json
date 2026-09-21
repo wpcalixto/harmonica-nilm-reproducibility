@@ -1,0 +1,11 @@
+{
+  "script": "22_build_tables.py",
+  "merge_de": [
+    "28A_prepare_table_data.py",
+    "28B_generate_tables_tex.py"
+  ],
+  "run_timestamp": "2026-07-15T00:46:48.563467+00:00",
+  "n_tabdata": 17,
+  "n_tex": 17,
+  "regra": "Parte1 l\u00ea audits/metrics/dg\u2192tabdata; Parte2 l\u00ea s\u00f3 tabdata\u2192tables/.tex"
+}

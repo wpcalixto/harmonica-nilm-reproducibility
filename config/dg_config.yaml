@@ -1,0 +1,40 @@
+# dg_config.yaml
+# Diesel Generator (D_G) balance reconstruction configuration
+
+reconstruction:
+  method: "physical_balance"         # D_G by balance, not direct measurement
+  status: "locked_main_method"
+  formula: "P_DG_phi(t) = sum_i P_Gamma_i_phi(t) + P_other_phi(t) + P_loss_phi(t) - P_MG_phi(t)"
+  note: "D_G is indirect reference via balance, not direct measurement"
+
+p_other:
+  description: >
+    Aggregate of valid sparse downstream loads not individually modeled (matches
+    scenario_config/meter_map): M10 + M12 + M13 + M14 (additive). M14 is a DISTINCT
+    load (electrical audit refuted any union with M15) -> it composes P_other. M15 is
+    Gamma_5 (modeled). Dead group M8/M9/M17/M18 excluded, not aggregated.
+  component_meters: [10, 12, 13, 14]   # = scenario_config.R2.p_other.component_meters (v2: M14 is a distinct load -> P_other)
+  meter_id: 100
+  must_exclude_m2: true
+  note: "v2 (2026-07-12): M14 is ELECTRICALLY DISTINCT from M15 (I/S ~5.7x, cosphi 0.36 vs 0.71, opposite Q) -> part of P_other. NO merge with M15."
+  per_phase: true
+
+losses:
+  scenarios: [0.0, 1.0, 2.0, 5.0]   # percentage of P_MG
+  unit: "percent_of_P_MG"
+  note: "4 loss scenarios for sensitivity S analysis"
+
+physical_limits:
+  dg_min_kw: 0.0
+  dg_max_kw: 2000.0                  # adjust if known installed capacity differs
+  per_phase: true
+  note: "Negative reconstructed P_DG indicates balance anomaly — flag for audit"
+
+auxiliary_zeros:
+  description: >
+    D_G auxiliary variables used as model inputs when D_G is not directly measured.
+    These are the 12 DG zeros (3 phases × 4 variables) added to the 48 RFECV features.
+  original_article_count: 12
+  role: "input_X_complement"
+  status: "locked_main_method"
+  note: "DG zero-value features have null PFI impact — expected by design"

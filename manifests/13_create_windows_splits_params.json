@@ -1,0 +1,88 @@
+{
+  "script": "13_create_windows_splits.py",
+  "run_timestamp": "2026-07-14T21:15:13.504682+00:00",
+  "parameters": {
+    "W": 12,
+    "stride": 1,
+    "train_ratio": 0.8,
+    "val_ratio": 0.1
+  },
+  "inputs": {
+    "X_parquet": "data/processed/10_original_features.parquet",
+    "Y_parquet": "data/processed/09_R1.parquet",
+    "candidate_sets": "data/processed/11_candidate_sets.json",
+    "fs_set": "reference_48",
+    "feature_hash": "ac6cfbde3916"
+  },
+  "results": {
+    "n_total_ts": 10000,
+    "n_train_ts": 8000,
+    "n_val_ts": 1000,
+    "n_test_ts": 1000,
+    "n_train_windows": 7989,
+    "n_val_windows": 989,
+    "n_test_windows": 989,
+    "X_shape": [
+      7989,
+      12,
+      60
+    ],
+    "Y_shape": [
+      7989,
+      12,
+      18
+    ],
+    "n_features": 60,
+    "n_mg_features": 48,
+    "n_dg_features": 12,
+    "n_outputs": 18,
+    "output_labels": [
+      "G1_A",
+      "G1_B",
+      "G1_C",
+      "G2_A",
+      "G2_B",
+      "G2_C",
+      "G3_A",
+      "G3_B",
+      "G3_C",
+      "G4_A",
+      "G4_B",
+      "G4_C",
+      "G5_A",
+      "G5_B",
+      "G5_C",
+      "G6_A",
+      "G6_B",
+      "G6_C"
+    ],
+    "Y_raw_test_shape": [
+      1000,
+      18
+    ],
+    "Y_watts_train_range": [
+      -91.89739227294922,
+      2856.856201171875
+    ],
+    "Y_scaled_train_range": [
+      0.0,
+      1.000000238418579
+    ]
+  },
+  "outputs": {
+    "X_train": "data/processed/13_X_train.npy",
+    "Y_train": "data/processed/13_Y_train.npy",
+    "X_val": "data/processed/13_X_val.npy",
+    "Y_val": "data/processed/13_Y_val.npy",
+    "X_test": "data/processed/13_X_test.npy",
+    "Y_test": "data/processed/13_Y_test.npy",
+    "Y_raw_test": "data/processed/13_Y_raw_test.npy",
+    "scaler_X": "data/processed/13_scaler_X.pkl",
+    "scaler_Y": "data/processed/13_scaler_Y.pkl",
+    "split_index": "audits/13_split_index.csv",
+    "window_metadata": "audits/13_window_metadata.csv",
+    "split_timeline": "figdata/13_split_timeline.csv",
+    "log": "logs/13_create_windows_splits.log",
+    "manifest": "manifests/13_create_windows_splits_params.json"
+  }
+}

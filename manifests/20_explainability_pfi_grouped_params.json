@@ -1,0 +1,122 @@
+{
+  "script": "20_explainability_pfi_grouped.py",
+  "section": "§2.7/§14.12",
+  "run_timestamp": "2026-07-14T22:28:07.108165",
+  "mode": "full",
+  "surrogate": "HistGradientBoostingRegressor",
+  "deep_model_confirmation": "pendente (Vast)",
+  "model_input": "S48 adotado (48 características + 12 auxiliares)",
+  "proxy_analysis_status": "NOT_APPLICABLE",
+  "n_proxy_channels": 0,
+  "family_partition_audit": {
+    "counts": {
+      "G_P": 3,
+      "G_I": 3,
+      "G_V": 3,
+      "G_THD": 6,
+      "G_hV": 78,
+      "G_hI": 75,
+      "G_sec": 9
+    },
+    "sum": 177,
+    "n_features": 177,
+    "orphans": 0,
+    "disjoint": true
+  },
+  "F_g_48": {
+    "G_P": 3,
+    "G_I": 3,
+    "G_V": 3,
+    "G_THD": 6,
+    "G_hV": 17,
+    "G_hI": 7,
+    "G_sec": 9
+  },
+  "seeds": [
+    42,
+    123,
+    456,
+    789,
+    1024
+  ],
+  "n_reps": 5,
+  "train_frac": 0.8,
+  "families": [
+    "G_P",
+    "G_I",
+    "G_V",
+    "G_THD",
+    "G_hV",
+    "G_hI",
+    "G_sec"
+  ],
+  "grouped_permutation": true,
+  "result": [
+    {
+      "family": "G_V",
+      "I_g_mean": 0.1511,
+      "I_g_std": 0.0054,
+      "I_g_q1": 0.1479,
+      "I_g_q3": 0.1568,
+      "n": 25
+    },
+    {
+      "family": "G_hV",
+      "I_g_mean": 0.0824,
+      "I_g_std": 0.004,
+      "I_g_q1": 0.0791,
+      "I_g_q3": 0.0845,
+      "n": 25
+    },
+    {
+      "family": "G_I",
+      "I_g_mean": 0.0616,
+      "I_g_std": 0.003,
+      "I_g_q1": 0.0593,
+      "I_g_q3": 0.0635,
+      "n": 25
+    },
+    {
+      "family": "G_THD",
+      "I_g_mean": 0.0258,
+      "I_g_std": 0.0017,
+      "I_g_q1": 0.0245,
+      "I_g_q3": 0.0272,
+      "n": 25
+    },
+    {
+      "family": "G_sec",
+      "I_g_mean": 0.0228,
+      "I_g_std": 0.0025,
+      "I_g_q1": 0.0209,
+      "I_g_q3": 0.0244,
+      "n": 25
+    },
+    {
+      "family": "G_hI",
+      "I_g_mean": 0.0164,
+      "I_g_std": 0.0017,
+      "I_g_q1": 0.0153,
+      "I_g_q3": 0.0173,
+      "n": 25
+    },
+    {
+      "family": "G_P",
+      "I_g_mean": -0.0066,
+      "I_g_std": 0.0019,
+      "I_g_q1": -0.0079,
+      "I_g_q3": -0.0057,
+      "n": 25
+    }
+  ],
+  "inputs": {
+    "X": "data/processed/10_original_features.parquet",
+    "Y": "data/processed/09_R1.parquet",
+    "adopted_set": "data/processed/11_candidate_sets.json",
+    "blocks_map": "audits/12_input_blocks_from_02b.csv"
+  },
+  "outputs": {
+    "summary": "metrics/20_pfi_grouped.csv"
+  },
+  "status": "success"
+}

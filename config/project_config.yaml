@@ -1,0 +1,51 @@
+# project_config.yaml
+# Central project configuration: multi-source industrial NILM
+# Dataset: dados_maior_v2 (published as data/raw/dados_maior_v2_transformed.csv)
+
+project:
+  name: nilm_multifonte_industrial
+  version: "2.0.0"
+  date_created: "2026-06-18"
+  date_updated: "2026-09-21"
+  journal: Applied Energy
+  description: >
+    Scale-admissibility gate for non-intrusive load monitoring in three-phase
+    industrial energy systems with an unmeasured support source (Applied Energy).
+
+authors:
+  - name: Wesley Pacheco Calixto
+    affiliation: Federal University of Goias / University of Coimbra / Federal Institute of Goias, Brazil
+    email: wesley.pacheco@isr.uc.pt   # corresponding author
+  - name: Jose A. Gobbes Cararo
+    affiliation: Federal University of Goias / Federal Institute Goiano, Brazil
+  - name: Guilherme A. Sousa Ribeiro
+    affiliation: Federal University of Goias / Federal Institute of Goias, Brazil
+  - name: Paulo Victor Santos
+    affiliation: Federal University of Goias / Federal Institute of Goias, Brazil
+
+paths:                                 # informative only: the scripts resolve every path from the repository root
+  project_root: "."
+  data_raw: "data/raw"
+  data_interim: "data/interim"
+  data_processed: "data/processed"
+  src: "src"
+  scripts: "scripts"
+  outputs: "."
+  outputs_audits: "audits"
+  outputs_figdata: "figdata"
+  outputs_tables: "tables"
+  outputs_models: "models"
+  outputs_predictions: "predictions"
+  outputs_dg: "dg"
+  outputs_metrics: "metrics"
+  outputs_figures: "figures"
+  outputs_logs: "logs"
+  outputs_manifests: "manifests"
+  outputs_article: "article"
+
+files:
+  raw_csv: "data/raw/dados_maior_v2_transformed.csv"   # public dataset (reversibly transformed values; see README)
+
+sampling:
+  delta_t_minutes: 1
+  total_days: 7

@@ -1,0 +1,18 @@
+name: harmonica_nilm
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - numpy=1.26.4
+  - pandas=3.0.3
+  - scipy=1.17.1
+  - scikit-learn=1.9.0
+  - joblib>=1.3
+  - pyyaml>=6.0
+  - pyarrow>=14.0
+  - matplotlib=3.11.0
+  - pip
+  - pip:
+      - tensorflow==2.17.0
+      - keras==3.4.1
+      - optuna==4.9.0

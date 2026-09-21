@@ -1,0 +1,23 @@
+{
+  "script": "16_evaluate.py",
+  "run_timestamp": "2026-07-15T00:41:38.699578+00:00",
+  "consome": [
+    "14_lstm",
+    "14_rcnn_att",
+    "15_pe_es",
+    "15_spec",
+    "15_mote_v2",
+    "15_ensemble_g4"
+  ],
+  "W_star": 30,
+  "n_outputs": 18,
+  "delta_t_hours": 0.016666666666666666,
+  "e_min_kwh": 1.0,
+  "outputs": [
+    "16_load_metrics_long.csv",
+    "16_metrics_by_output.csv",
+    "16_energy_by_load.csv",
+    "16_system_erg.csv",
+    "16_nae_by_model_long.csv"
+  ]
+}

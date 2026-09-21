@@ -1,0 +1,66 @@
+{
+  "script": "21_economic_analysis.py",
+  "ex": "27_economic_analysis.py",
+  "run_timestamp": "2026-07-15T00:46:47.807257+00:00",
+  "parameters": {
+    "C_GR_USD_per_kWh": 0.2,
+    "T_eval_h": 16.6667,
+    "T_yearly_h": 8760.0,
+    "ratio_yearly": 525.6,
+    "n_test": 1000
+  },
+  "model_sources": {
+    "prediction_costs": "models present in metrics/16_load_metrics_long.csv",
+    "energy_type_costs": "models present in dg/17_dg_energy_by_phase.csv",
+    "hpo_sensitivity": "PE_ES_Optuna appears only if included in upstream tables (14/15); marked via analysis_group/is_primary"
+  },
+  "results": {
+    "model_summary": [
+      {
+        "model": "MoTE_v2",
+        "C_real_mean": 39.4765,
+        "C_error_mean": 0.43563999999999997,
+        "delta_C_mean": 0.37048,
+        "C_yearly_mean": 228.98000000000002
+      },
+      {
+        "model": "Ensemble_G4",
+        "C_real_mean": 40.4954,
+        "C_error_mean": 0.4462,
+        "delta_C_mean": 0.10955999999999999,
+        "C_yearly_mean": 234.53000000000003
+      },
+      {
+        "model": "LSTM",
+        "C_real_mean": 40.4954,
+        "C_error_mean": 0.46643999999999997,
+        "delta_C_mean": 0.14284,
+        "C_yearly_mean": 245.16199999999998
+      },
+      {
+        "model": "PE_ES",
+        "C_real_mean": 39.7328,
+        "C_error_mean": 0.5004000000000001,
+        "delta_C_mean": 0.61124,
+        "C_yearly_mean": 263.008
+      },
+      {
+        "model": "RCNN_att",
+        "C_real_mean": 40.4954,
+        "C_error_mean": 0.56658,
+        "delta_C_mean": 0.5827,
+        "C_yearly_mean": 297.804
+      },
+      {
+        "model": "SPEC",
+        "C_real_mean": 39.7328,
+        "C_error_mean": 0.77566,
+        "delta_C_mean": 1.17076,
+        "C_yearly_mean": 407.682
+      }
+    ],
+    "u_C_DG_total_USD": 0.536,
+    "u_C_DG_yearly_total_USD": 281.72,
+    "u_E_DG_total_kWh": 2.68
+  }
+}

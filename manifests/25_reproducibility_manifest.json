@@ -1,0 +1,142 @@
+{
+  "script": "25_reproducibility_report.py",
+  "ex": "31_reproducibility_report.py",
+  "generated_at": "2026-07-15T00:46:56.108921+00:00",
+  "pipeline_manifests": [
+    "13_create_windows_splits_params",
+    "14_train_baselines_params",
+    "15_train_advanced_params",
+    "16_evaluate_params",
+    "17_dg_balance_params",
+    "18_statistical_analysis_params",
+    "19_explainability_ablation_params",
+    "20_explainability_pfi_grouped_params",
+    "21_economic_analysis_params",
+    "22_build_tables_params",
+    "23_generate_figures_params",
+    "24_export_article_results_params"
+  ],
+  "n_manifests": 12,
+  "seeds": {
+    "global": [
+      42,
+      123,
+      456,
+      789,
+      1024
+    ],
+    "by_script": {
+      "14_train_baselines": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ]
+    }
+  },
+  "library_versions": {
+    "python": "3.11.0rc1",
+    "platform": "Linux-5.15.0-177-generic-x86_64-with-glibc2.35",
+    "tensorflow": "2.17.0",
+    "keras": "3.4.1",
+    "numpy": "1.26.4",
+    "pandas": "3.0.3",
+    "scikit-learn": "1.9.0",
+    "scipy": "1.17.1",
+    "PyYAML": "6.0.3",
+    "kneed": "n/a",
+    "optuna": "4.9.0",
+    "pyarrow": "25.0.0",
+    "matplotlib": "3.11.0"
+  },
+  "checksums": {
+    "data/processed/09_R1.parquet": {
+      "sha256_16": "7cd4300b10431119",
+      "size_bytes": 1934022
+    },
+    "data/processed/09_R2.parquet": {
+      "sha256_16": "f011abccfd401505",
+      "size_bytes": 2223639
+    },
+    "data/processed/13_X_train.npy": {
+      "sha256_16": "7891beba81f473c8",
+      "size_bytes": 23008448
+    },
+    "data/processed/13_X_test.npy": {
+      "sha256_16": "510f3e5779ad46a8",
+      "size_bytes": 2848448
+    },
+    "data/processed/13_Y_raw_test.npy": {
+      "sha256_16": "04e42d27c1afc7c3",
+      "size_bytes": 72128
+    },
+    "audits/11_kneedle_selection.csv": {
+      "sha256_16": "c18438df7820202b",
+      "size_bytes": 196
+    },
+    "metrics/16_load_metrics_long.csv": {
+      "sha256_16": "7f467cd84c3f8e73",
+      "size_bytes": 38525
+    },
+    "dg/17_dg_energy_by_phase.csv": {
+      "sha256_16": "2cc2867594fb506f",
+      "size_bytes": 2687
+    },
+    "dg/17_dg_uncertainty_interval.csv": {
+      "sha256_16": "be7c4a0dbf5dcb35",
+      "size_bytes": 711
+    },
+    "tabdata/table_05_model_metrics.csv": {
+      "sha256_16": "1602e84fd5a3fcc5",
+      "size_bytes": 468
+    },
+    "article/24_article_values.yaml": {
+      "sha256_16": "d0390b6257e65fe5",
+      "size_bytes": 3869
+    }
+  },
+  "key_deliverables": {
+    "tables/table_*.tex": {
+      "n": 17,
+      "desc": "LaTeX tables (18)"
+    },
+    "figures/figure_*.pdf": {
+      "n": 24,
+      "desc": "PDF figures (19)"
+    },
+    "dg/17_dg_*.csv": {
+      "n": 13,
+      "desc": "D_G outputs (15)"
+    },
+    "metrics/18_*.csv": {
+      "n": 5,
+      "desc": "statistics/PFI (16)"
+    },
+    "metrics/21_economic_*.csv": {
+      "n": 3,
+      "desc": "economic (17)"
+    },
+    "article/2*_*.yaml": {
+      "n": 1,
+      "desc": "article values (20)"
+    },
+    "article/2*_*.md": {
+      "n": 2,
+      "desc": "article reports/checklists (20–21)"
+    }
+  },
+  "scenarios": {
+    "dg_balance": {
+      "scenarios": [
+        "R1",
+        "R2"
+      ]
+    },
+    "dg_sensitivity": {
+      "n_scenarios": 8
+    }
+  },
+  "anchors_present": "11/11",
+  "reproducibility_status": "OK"
+}

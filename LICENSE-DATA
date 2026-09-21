@@ -1,0 +1,13 @@
+The data files of this package (data/, models/, predictions/, manifests/) are
+licensed under the Creative Commons Attribution 4.0 International License
+(CC BY 4.0). To view a copy of this license, visit
+https://creativecommons.org/licenses/by/4.0/
+
+Attribution: Calixto, W. P., Cararo, J. A. G., Ribeiro, G. A. S., & Santos, P. V.
+(2026). Reproducibility package for non-intrusive load monitoring in industrial
+three-phase multi-source systems (Version 2.0.0). Zenodo.
+https://doi.org/10.5281/zenodo.22878924
+
+The measurement values in data/raw/dados_maior_v2_transformed.csv are a reversible
+transformation of the original values, which are subject to a confidentiality
+agreement with the industrial facility (see README.md, "Data transformation notice").

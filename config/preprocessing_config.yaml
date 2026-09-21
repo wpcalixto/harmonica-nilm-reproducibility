@@ -1,0 +1,105 @@
+# preprocessing_config.yaml
+# Preprocessing parameters
+
+gap_filling:
+  # Self-similar ANALOG/FRACTAL filling (fragments of the series itself).
+  # Cross-meter imputation (earlier design) was INVALIDATED and is NOT used.
+  method: "analog_fractal_self_similar"
+  status: "locked_main_method"
+  gap_definition: "NaN OR zero OR floor_sentinel"
+  amplitude_zoom_K: 1.40             # A_c = K * sigma(context)
+  no_interpolation: true             # never interpolates; copies real pieces with amplitude zoom
+  source_priority: "same_series_first_then_donor_last_resort"
+  never_larger_amplitude: true       # never enlarges the amplitude of the copied piece
+  validation: "held-out: fractal vs interpolacao linear vs MLP por amplitude, frequencia, energia, KS, Wilcoxon"
+  criterion: "local statistical and spectral preservation (not point-by-point error)"
+  note: "v8: substitui cross_meter_imputation (invalidada). Regra dinamica de categorias/porcoes vem do script de caracterizacao de lacunas."
+
+outlier_treatment:
+  method: "tukey_iqr"               # LOCKED: do not replace globally
+  status: "locked_main_method"
+  kappa: 8.0                         # Lim = Q3 + k*IQR (k=8)
+  short_run_only: 3                  # marks only short runs ell_run <= 3
+  iqr_zero_fallback: "mediana +/- 12 * 1.4826 * MAD"   # when IQR = 0
+  directed_complement: "M15"         # M15 still has MW-level peaks in v2 -> directed correction
+  note: "v8: k=8 (era 3). Complemento dirigido de limite fisico so para M15."
+
+resampling:
+  target_freq: "1min"
+  method: "nearest"                  # preserve original value, no aggregation
+
+splits:
+  method: "temporal"                 # LOCKED: no shuffling
+  status: "locked_main_method"
+  train_ratio: 0.80
+  val_ratio: 0.10
+  test_ratio: 0.10
+  note: "Temporal order preserved; test set never used for normalization or selection"
+
+normalization:
+  method: "min_max"                  # LOCKED
+  status: "locked_main_method"
+  fit_on: "train_only"
+  note: "Scaler fitted exclusively on training set; applied to val/test without refitting"
+
+windows:
+  W: 12                              # LOCKED: window size in timesteps (1-minute resolution)
+  status: "locked_main_method"
+  stride: 1
+  note: "W=12 corresponds to 12-minute windows at 1-minute resolution"
+
+audit_physical:                      # physical and informational audit (read-only; script 03)
+  method: "physical_informational_audit"
+  status: "locked_main_method"
+  script: "03_audit_physical_informational.py"
+  # voltage GATE = INSTRUMENT RANGE (Parametros.jpeg), not the nominal +/-20% band
+  v_ln_min: 1.0                      # minimum measurable L-N voltage (Vrms)
+  v_ln_max: 300.0                    # maximum measurable L-N voltage (Vrms) -> physical gate
+  v_ll_min: 2.0                      # minimum L-L voltage (Vrms); reference
+  v_ll_max: 500.0                    # maximum L-L voltage (Vrms); reference
+  h_max_order: 51                    # maximum supported harmonic order
+  v_nominal_pn: 219.393              # nominal L-N (380/sqrt(3)); secondary operational marker
+  v_tol: 0.20                        # +/-20 %: nominal deviation (marker, not gate)
+  tri_tol: 0.10                      # |P^2+Q^2-S^2|/S^2 above this = triangle violation
+  phys_frac: 0.02                    # fraction of violating points -> non-physical verdict
+  reverse_frac: 0.50                 # >50 % of P<0 -> predominantly reverse channel
+  stuck_frac: 0.50                   # longest constant run / n_real above this = stuck
+  live_min: 0.05                     # below this many live real points = dead
+  redund_r2: 0.95                    # R2 vs P_ref (audited active powers + P_tot) >= this -> redundant
+  redund_strong: 0.99                # strong redundancy threshold (marker redund_strong)
+  clock_r2: 0.50                     # R2 vs time index >= this and non-redundant -> clock
+  sent_floor_frac: 0.02              # most frequent finite value with freq >= this = floor
+  # Energy-plausibility markers of the active P (they do NOT exclude P; they produce alert/sensitivity flags)
+  rev_normal: 0.05                   # reverse_frac < this -> NORMAL convention
+  rev_reversed: 0.80                 # reverse_frac > this -> REVERSED_OR_BIDIRECTIONAL
+  energy_alpha: 1.5                  # tolerance alpha of the magnitude test with external reference
+  coherence_warn_ratio: 5.0          # |E_MG|/|E_L| outside [1/r, r] -> coherence alert
+  # METHODOLOGICAL DECISION: P_lim is NOT used in the main study. There is no source
+  # independent of the CSV (the only per-meter constant is tag_meter_id, a linear label,
+  # not power; and the maxima of P are physically impossible, e.g. M_G 5.6e6 kW,
+  # M15 1.1e7 kW). Any P_lim extracted from the data itself would be CIRCULAR.
+  # Empty by_meter -> P_lim always absent -> energy_plausibility=WARN,
+  # scale_status=UNKNOWN_NO_REFERENCE, FAIL_EXTERNAL_REF NEVER applied.
+  # Fill ONLY if a reliable external reference appears (nameplate/demand/transformer/generator),
+  # with hierarchical fallback: by_meter[label][phase] -> by_meter[label] -> default -> UNKNOWN.
+  external_power_limit_kw:
+    default: null
+    by_meter: {}
+  note: "Read-only between 02 and 05; sentinel-aware, pre-fill; MAD robust to offset. Does not correct."
+
+inverse_compatibility:               # 04_inverse_physical_compatibility.py
+  method: "minimal_identity_adjustment"
+  status: "locked_main_method"
+  script: "04_inverse_physical_compatibility.py"
+  # MINIMAL diagnostic adjustment close to the identity; does NOT recalibrate the data automatically.
+  # J = w_vi*rho(S~V*I) + w_pcos*rho(P~S*cos) + w_tri*rho(S^2~P^2+Q^2) + lambda*||theta-theta0||^2
+  # theta = (a_V, b_V, a_I, b_I, a_S, a_Q); a_P=1, b_P=0 (P is the fixed energy quantity).
+  w_vi: 1.0
+  w_pcos: 1.0
+  w_tri: 1.0
+  lambda_reg: 0.10                    # regularisation to keep theta close to the identity
+  huber_delta: 0.05                  # Huber f_scale ~ scale of the coherent residual (robust to outliers/reverse flow)
+  resid_compatible: 0.05             # median relative residual <= this (after adjustment) = COMPATIBLE
+  resid_incompatible: 0.20           # median relative residual > this (after adjustment) = INCOMPATIBLE_PERSISTENT
+  param_dist_alert: 0.20             # ||theta-theta0|| > this = ALERT (moved away from the identity)
+  note: "Physical control between the audit (03) and the scope (05). Produces markers, does not alter the data."

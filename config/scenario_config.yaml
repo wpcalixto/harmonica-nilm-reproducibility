@@ -1,0 +1,79 @@
+# scenario_config.yaml
+# Experimental scenarios R0, R1, R2: CANONICAL (AS-IMPLEMENTED)
+# Mirror of the hard-coded scope in 09_build_model_datasets.py:
+#   R0_LOADS=[5,6,7,11,16]   R1_LOADS=[5,6,7,11,15,16]   POTHER_METER_ID=100
+#   GAMMA_ID={5:1, 6:2, 7:3, 11:4, 15:5, 16:6}
+# and the DG-balance sensitivity S0-S7 in 17_dg_balance.py.
+
+scenarios:
+
+  R0:
+    label: "R0"
+    description: "Reference scenario for traceability - 5 loads x 3 phases = 15 outputs"
+    purpose: "Before/after comparison reference (subset of R1)"
+    loads:
+      Gamma_1: {meter: 5,  name: "M5"}
+      Gamma_2: {meter: 6,  name: "M6"}
+      Gamma_3: {meter: 7,  name: "M7"}
+      Gamma_4: {meter: 11, name: "M11"}
+      Gamma_6: {meter: 16, name: "M16"}
+    n_loads: 5
+    n_outputs: 15
+    include_m2: false
+    note: "R0 loads = {5,6,7,11,16}; M15 (Gamma_5) enters only in R1"
+
+  R1:
+    label: "R1"
+    description: "Main scenario - 6 audited independent loads x 3 phases = 18 outputs"
+    purpose: "Principal scenario for model training and testing"
+    loads:
+      Gamma_1: {meter: 5,  name: "M5"}
+      Gamma_2: {meter: 6,  name: "M6"}
+      Gamma_3: {meter: 7,  name: "M7"}
+      Gamma_4: {meter: 11, name: "M11"}
+      Gamma_5: {meter: 15, name: "M15"}
+      Gamma_6: {meter: 16, name: "M16"}
+    n_loads: 6
+    n_outputs: 18
+    include_m2: false
+    note: "M2 excluded (~ M_G); M8/M9/M17/M18 dead/redundant; M10/M12/M13/M14 -> P_other"
+
+  R2:
+    label: "R2"
+    description: "R1 + P_other aggregate for multisource DG balance closure"
+    purpose: "Main scenario with DG balance closure"
+    loads:
+      Gamma_1: {meter: 5,  name: "M5"}
+      Gamma_2: {meter: 6,  name: "M6"}
+      Gamma_3: {meter: 7,  name: "M7"}
+      Gamma_4: {meter: 11, name: "M11"}
+      Gamma_5: {meter: 15, name: "M15"}
+      Gamma_6: {meter: 16, name: "M16"}
+    p_other:
+      meter_id: 100
+      component_meters: [10, 12, 13, 14]   # v2: P_other = M10+M12+M13+M14 (M14 is a distinct load from M15 by the electrical audit)
+    n_individual_outputs: 18
+    n_p_other_series: 3
+    total_balance_series: 21
+    include_m2: false
+    note: "P_other = M10+M12+M13+M14 (v2: M14 is a distinct load from M15). Closure aggregate, not a target."
+
+gamma_id_by_meter: {5: 1, 6: 2, 7: 3, 11: 4, 15: 5, 16: 6}
+
+# DG-balance sensitivity (authoritative in 17_dg_balance.py): S0 baseline;
+# S1-S3 distribution losses 1/2/5% (appear in R2); S4-S7 structural P_other with one
+# component removed (appear in R1).
+sensitivity_scenarios:
+  S0: {label: "S0", type: "baseline",   description: "Baseline balance (no loss, full P_other)"}
+  S1: {label: "S1", type: "loss",       loss_frac: 0.01, description: "Distribution losses 1% of P_MG"}
+  S2: {label: "S2", type: "loss",       loss_frac: 0.02, description: "Distribution losses 2% of P_MG"}
+  S3: {label: "S3", type: "loss",       loss_frac: 0.05, description: "Distribution losses 5% of P_MG"}
+  S4: {label: "S4", type: "structural", remove_component: 12, description: "P_other sem M12"}
+  S5: {label: "S5", type: "structural", remove_component: 13, description: "P_other sem M13"}
+  S6: {label: "S6", type: "structural", remove_component: 10, description: "P_other sem M10"}
+  # S7 (v2): destination of M14. The electrical audit refuted the merge with M15, so the
+  # valid sensitivity compares SEPARATE DESTINATIONS of M14 (never concatenation):
+  # P_other WITH M14 (baseline) vs P_other WITHOUT M14 (M14 outside the balance).
+  S7: {label: "S7", type: "p_other_m14", variant: "without_m14", description: "P_other = M10+M12+M13 (M14 fora) — sensibilidade do destino de M14"}
+
+default_scenario: "R1"
